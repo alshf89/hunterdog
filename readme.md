@@ -1,4 +1,4 @@
-# HunterDog Feed Readerhttps://github.com/alshf89/hunterdog/issues
+# HunterDog Feed Reader
 
 A lightweight, expressive and fast Feed Reader. HunterDog takes care of value sanitization. At least PHP 5.4 is required.
 
@@ -25,8 +25,6 @@ Or you can use command line:
 And run:
 
     composer update
-
-Library on [Packagist](https://packagist.org/packages/usmanhalalit/pixie).
 
 ### How to use
 
