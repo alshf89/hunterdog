@@ -1,0 +1,26 @@
+{
+    "name": "alshf/hunter-dog",
+    "description": "RSS Reader Engine for theMondayNews",
+    "keywords" : ["RSS","theMondayNews","HunterDog"],
+    "require-dev": {
+        "phpunit/phpunit": "^5.3",
+        "symfony/var-dumper": "^3.0"
+    },
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Ali Shafiee",
+            "email": "ali@themondaynews.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "alshf\\": "src/"
+        }
+    },
+    "require": {
+        "illuminate/support": "^5.2",
+        "nesbot/carbon": "^1.21"
+    }
+}
