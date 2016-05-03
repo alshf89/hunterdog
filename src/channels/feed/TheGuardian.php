@@ -5,24 +5,8 @@ use alshf\channels\FeedProvider as Feed;
 use alshf\build\InvalidValueException;
 use Sanitizer;
 
-class Cnet extends Feed
+class TheGuardian extends Feed
 {	
-	public function title()
-	{
-		return Sanitizer::bleach( $this->item->title, ['format' => 'utf-8'],
-			function( $sponge )
-			{
-				$sponge->string = preg_replace(
-					'/(^(cnet|live)\s*[\:\-\;]|\s*[\:\-\;]\s*(cnet|live)$)/i', '', $sponge->string
-				);
-
-				return $sponge->checkLength()
-					   		  ->hasKeywords()
-					   		  ->hasSpecialchars();
-			}
-		);
-	}
-
 	public function author()
 	{
 		if( !empty($this->item->children($this->namespaces->dc)->creator) )
@@ -37,16 +21,16 @@ class Cnet extends Feed
 
 	public function image()
 	{
-		if( isset($this->item->children($this->namespaces->media)->thumbnail) )
+		if( isset($this->item->children($this->namespaces->media)->content) )
 		{
 			$image = $this->item
 						  ->children($this->namespaces->media)
 						  ->thumbnail
-						  ->attributes()['url'];
+						  ->attributes();
 
-			if( !Sanitizer::has('default.jpg', $image) )
+			if( $image['width'] > 400 )
 			{
-				return $image;
+				return $image['url'];
 			}
 		}
 		

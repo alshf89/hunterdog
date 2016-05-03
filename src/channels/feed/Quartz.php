@@ -5,24 +5,8 @@ use alshf\channels\FeedProvider as Feed;
 use alshf\build\InvalidValueException;
 use Sanitizer;
 
-class Cnet extends Feed
+class Quartz extends Feed
 {	
-	public function title()
-	{
-		return Sanitizer::bleach( $this->item->title, ['format' => 'utf-8'],
-			function( $sponge )
-			{
-				$sponge->string = preg_replace(
-					'/(^(cnet|live)\s*[\:\-\;]|\s*[\:\-\;]\s*(cnet|live)$)/i', '', $sponge->string
-				);
-
-				return $sponge->checkLength()
-					   		  ->hasKeywords()
-					   		  ->hasSpecialchars();
-			}
-		);
-	}
-
 	public function author()
 	{
 		if( !empty($this->item->children($this->namespaces->dc)->creator) )
@@ -44,9 +28,18 @@ class Cnet extends Feed
 						  ->thumbnail
 						  ->attributes()['url'];
 
-			if( !Sanitizer::has('default.jpg', $image) )
+			if( !Sanitizer::has('.png', $image) )
 			{
-				return $image;
+				$faults = [
+					'#038;' 		=> '',
+					'quality=80'	=> 'quality=100',
+					'w=150' 		=> 'w=940',
+				];
+
+	    		// Images Width & Heigth Sample :
+	    		// http://qzprod.files.wordpress.com/2015/11/a.jpg?quality=80&#038;strip=all&#038;w=150
+    			// http://qzprod.files.wordpress.com/2015/11/a.jpg?quality=100&strip=all&w=600
+				return str_ireplace(array_keys($faults), array_values($faults), $image);
 			}
 		}
 		

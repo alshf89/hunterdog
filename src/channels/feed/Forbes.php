@@ -9,11 +9,11 @@ class Forbes extends Feed
 {	
 	public function author()
 	{
-		if( !empty($this->item->children($this->namespaces->dc)->creator[0]) )
+		if( !empty($this->item->children($this->namespaces->dc)->creator) )
 		{
 			return $this->item
 						->children($this->namespaces->dc)
-						->creator[0];
+						->creator;
 		}
 		
 		return null;
@@ -21,11 +21,11 @@ class Forbes extends Feed
 
 	public function image()
 	{
-		if( isset($this->item->children($this->namespaces->media)->content[0]) )
+		if( isset($this->item->children($this->namespaces->media)->content) )
 		{
 			$image = $this->item
 						  ->children($this->namespaces->media)
-						  ->content[0]
+						  ->content
 						  ->attributes()['url'];
 			
 			if( !Sanitizer::has('.png', $image) && Sanitizer::has('specials-images' , $image) )

@@ -40,21 +40,21 @@ class CNN extends Feed
 
 	public function image()
 	{
-		if( isset($this->item->children($this->namespaces->media)->thumbnail[0]) )
+		if( isset($this->item->children($this->namespaces->media)->thumbnail) )
 		{
 			$image = $this->item
 						  ->children($this->namespaces->media)
-						  ->thumbnail[0]
+						  ->thumbnail
 						  ->attributes()['url'];
 
 			if( !Sanitizer::has(['.png', 'cnn-logo'], $image) )
 			{
 				$faults = [
-					'-top-tease.jpg',
-					'-top-tease.jpeg',
-					'-small-11.jpg',
-					'-small-169.jpg',
-					'-large-169.jpg'
+					'-top-tease.jpg'  	=> '-exlarge-169.jpg',
+					'-top-tease.jpeg' 	=> '-exlarge-169.jpg',
+					'-small-11.jpg' 	=> '-exlarge-169.jpg',
+					'-small-169.jpg' 	=> '-exlarge-169.jpg',
+					'-large-169.jpg' 	=> '-exlarge-169.jpg'
 				];
 
 	    		// Images Width & Heigth Sample :
@@ -65,7 +65,7 @@ class CNN extends Feed
 		        // http://i2.cdn.turner.com/cnnnext/dam/assets/name-small-11.jpg
 		        // http://i2.cdn.turner.com/cnnnext/dam/assets/name-small-169.jpg
 		        // http://i2.cdn.turner.com/cnnnext/dam/assets/name-large-169.jpg
-				return str_ireplace($faults, ['-exlarge-169.jpg'], $image);
+				return str_ireplace(array_keys($faults), array_values($faults), $image);
 			}
 		}
 		

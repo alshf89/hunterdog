@@ -1,7 +1,6 @@
-<?php 
-
+<?php
 // AutoLoad
-$loader = require __DIR__ . '/vendor/autoload.php';
+$loader = require dirname(__DIR__) . '/vendor/autoload.php';
 
 use alshf\HunterDog;
 use alshf\build\HunterDogException;
@@ -9,12 +8,12 @@ use alshf\build\InvalidValueException;
 
 try 
 {	
-	$RSS = new HunterDog([
-		'url' 		=> 'http://cnet.com/rss/news/',
-		'channel' 	=> alshf\channels\feed\Atlantic::class,
+	$feed = new HunterDog([
+		'url' 		=> 'https://www.theguardian.com/uk/technology/rss',
+		'channel' 	=> alshf\channels\feed\TheGuardian::class,
 	]);
 
-	foreach ( $RSS->get() as $item) 
+	foreach ( $feed->get() as $item) 
 	{
 		try 
 		{
@@ -36,6 +35,7 @@ try
 		} 
 		catch (InvalidValueException $e) 
 		{
+			echo $e->getMessage();
 			continue;
 		}
 	}

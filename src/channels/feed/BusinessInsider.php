@@ -5,24 +5,8 @@ use alshf\channels\FeedProvider as Feed;
 use alshf\build\InvalidValueException;
 use Sanitizer;
 
-class Cnet extends Feed
+class BusinessInsider extends Feed
 {	
-	public function title()
-	{
-		return Sanitizer::bleach( $this->item->title, ['format' => 'utf-8'],
-			function( $sponge )
-			{
-				$sponge->string = preg_replace(
-					'/(^(cnet|live)\s*[\:\-\;]|\s*[\:\-\;]\s*(cnet|live)$)/i', '', $sponge->string
-				);
-
-				return $sponge->checkLength()
-					   		  ->hasKeywords()
-					   		  ->hasSpecialchars();
-			}
-		);
-	}
-
 	public function author()
 	{
 		if( !empty($this->item->children($this->namespaces->dc)->creator) )
@@ -44,10 +28,10 @@ class Cnet extends Feed
 						  ->thumbnail
 						  ->attributes()['url'];
 
-			if( !Sanitizer::has('default.jpg', $image) )
-			{
-				return $image;
-			}
+    		// Images Width & Heigth Sample :
+    		// http://static2.businessinsider.com/image/563989ac9dd7cc70408bbec8/ex.jpg
+			// http://static2.businessinsider.com/image/563989ac9dd7cc70408bbec8-800/ex.jpg
+			return substr_replace($image, '-800', strrpos($image, '/'), 0);
 		}
 		
 		throw new InvalidValueException('Invalid image value in '.__METHOD__);
