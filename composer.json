@@ -3,7 +3,6 @@
     "description": "RSS Reader Engine for theMondayNews",
     "keywords" : ["RSS","theMondayNews","HunterDog"],
     "require-dev": {
-        "phpunit/phpunit": "^5.3",
         "symfony/var-dumper": "^3.0"
     },
     "license": "MIT",
