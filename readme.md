@@ -7,6 +7,7 @@ A lightweight, expressive and fast Feed Reader. HunterDog takes care of value sa
  - [Installation](#installation)
  - [Channels](#channels)
  - [How to use](#how-to-use)
+ 	- [Step by Step](#how-to-use)
  	- [Error Handler](#error-handler)
  - [Contributing](#contributing)
  - [Credits](#credits)
@@ -63,7 +64,7 @@ require 'vendor/autoload.php';
 #### Step 1.
 
 ```PHP
-// Autoload HunterDog & Exception
+// use HunterDog & Exception
 use alshf\HunterDog;
 use alshf\build\HunterDogException;
 
@@ -87,27 +88,27 @@ catch( HunterDogException $e )
 
 #### Step 2.
 
-Now you can get title or description or ... from each feed
+Now you can get title or description or etc from each feed items
 
 ```PHP
 use alshf\build\InvalidValueException;
 ```
 
-**Note:** HunterDog will Sanitize it for you so you need to autoload Sanitizer exception
+**Note:** HunterDog will Sanitize it for you so you need to use Sanitizer exception
 
 ```PHP
-// Autoload Sanitizer exception
+// use Sanitizer exception
 use alshf\build\InvalidValueException;
 
-// Loop throught each feed
-foreach ( $feed->get() as $item) 
+// Loop throught each feed items
+foreach ( $feed->get() as $item ) 
 {
 	try 
 	{
 		// New intance of stdClass for test
 		$feed = new stdClass;
 
-		// Get feed item property
+		// Get feed items properties
 		$feed->title 	   	= $item->title;
 		$feed->description 	= $item->description;
 		$feed->link 	   	= $item->link;
@@ -145,7 +146,7 @@ SadDog::lastError();
 ##### Example
 
 ```PHP
-// Include HunterDog & Exception
+// use HunterDog & Exception
 use alshf\HunterDog;
 use alshf\build\HunterDogException;
 use SadDog;
@@ -175,4 +176,4 @@ The code on which this package is principally developed and maintained by [Ali S
 
 ### License
 
-The HunterDog package is released under [the MIT License](LICENSE).
+The HunterDog package is released under [the MIT License](LICENSE.txt).
