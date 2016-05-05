@@ -6,6 +6,8 @@ php:
   - '7.0'
   - hhvm
   - nightly
+env:
+  - carbonVersion="^1.21"
 install: 
   - php vendor/autoload.php
-  - composer require nesbot/carbon:^1.21
+  - composer require nesbot/carbon:${carbonVersion}
