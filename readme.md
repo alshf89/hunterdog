@@ -5,7 +5,9 @@ A lightweight, expressive and fast Feed Reader. HunterDog takes care of value sa
 ## Documentation
 
  - [Installation](#installation)
+ - [Channels](#channels)
  - [How to use](#how-to-use)
+ 	- [Error Handler](#error-handler)
  - [Contributing](#contributing)
  - [Credits](#credits)
  - [License](#license)
@@ -26,51 +28,143 @@ And run:
 
     composer update
 
-### How to use
+### Channels
+
+**HunterDog** provides feed channels and you should use these channels for each feed URLs
+
+#### Available Channels
 
 ```PHP
-// Make sure you have Composer's autoload file included
-require 'vendor/autoload.php';
+	// Channels
+	alshf\channels\feed\CNN::class
+	alshf\channels\feed\Cnet::class
+	alshf\channels\feed\Goal::class
+	alshf\channels\feed\Quartz::class
+	alshf\channels\feed\Forbes::class
+	alshf\channels\feed\Skynews::class
+	alshf\channels\feed\Telegraph::class
+	alshf\channels\feed\TheGuardian::class
+	alshf\channels\feed\TheIndependent::class
+	alshf\channels\feed\BusinessInsider::class
+	alshf\channels\feed\EveningStandard::class
+	alshf\channels\feed\TheNewYorkTimes::class
+```
 
-// Includes
+### How to use
+
+First you should wake HunterDog up and give him a feed **URL** and a **channel** class, he will go and grab all feed items for you!
+
+Make sure you have Composer's autoload file included
+
+```PHP
+require 'vendor/autoload.php';
+```
+
+#### Step 1.
+
+```PHP
+// Autoload HunterDog & Exception
 use alshf\HunterDog;
 use alshf\build\HunterDogException;
-use alshf\build\InvalidValueException;
 
-try 
+try
 {	
-	// Get Feed from url and and create new instance from channel
+	// Create new instance from HunterDog class and pass URL and channel class as an array parameter
 	$feed = new HunterDog([
 		'url' 		=> 'http://cnet.com/rss/news/',
-		'channel' 	=> alshf\channels\feed\Atlantic::class,
+		'channel' 	=> alshf\channels\feed\Cnet::class,
 	]);
 
-	// Loop throught all items
-	foreach ( $feed->get() as $item) 
-	{
-		try 
-		{	
-			echo $item->title;
-			echo $item->description;
-			echo $item->link;
-			echo "<img src='".$item->image."'>";
-			echo $item->author;
-			echo $item->publishedAt;
-			echo $item->guid;
-		} 
-		catch (InvalidValueException $e) 
-		{
-			//Error on Invalid title, guid or image ...
-			continue;
-		}
-	}
-} 
-catch ( HunterDogException $e ) 
-{	
+	// Get feed
+	$feed->get();
+}
+catch( HunterDogException $e )
+{
 	// Error
 	echo $e->getMessage();
 }
 ```
+
+#### Step 2.
+
+Now you can get title or description or ... from each feed
+
+```PHP
+use alshf\build\InvalidValueException;
+```
+
+**Note:** HunterDog will Sanitize it for you so you need to autoload Sanitizer exception
+
+```PHP
+// Autoload Sanitizer exception
+use alshf\build\InvalidValueException;
+
+// Loop throught each feed
+foreach ( $feed->get() as $item) 
+{
+	try 
+	{
+		// New intance of stdClass for test
+		$feed = new stdClass;
+
+		// Get feed item property
+		$feed->title 	   	= $item->title;
+		$feed->description 	= $item->description;
+		$feed->link 	   	= $item->link;
+		$feed->image 	 	= "<img src='".$item->image."'>";
+		$feed->author   	= $item->author;
+		$feed->publishedAt  = $item->publishedAt;
+		$feed->guid 		= $item->guid;
+
+		print_r($feed);
+	} 
+	catch (InvalidValueException $e) 
+	{	
+		// When HunterDog Sanitize each feed item property,
+		// Throw exception on invalid string values or images
+		continue;
+	}
+}
+```
+___
+
+#### Error Handler
+
+you can get all or last XML Error with ErrorBag trait.
+
+```PHP
+// SadDog Facade
+use SadDog;
+
+// Get all Errors | return an Array of all Errors
+SadDog::errors();
+
+// Get last Error | return last Error string
+SadDog::lastError();
+```
+##### Example
+
+```PHP
+// Include HunterDog & Exception
+use alshf\HunterDog;
+use alshf\build\HunterDogException;
+use SadDog;
+
+try
+{	
+	// Create new instance from HunterDog class and pass URL and channel class as an array parameter
+	$feed = new HunterDog([
+		'url' 		=> 'http://cnet.com/rss/news/',
+		'channel' 	=> alshf\channels\feed\Cnet::class,
+	]);
+}
+catch( HunterDogException $e )
+{
+	// use ErrorBag trait
+	echo SadDog::lastError();
+}
+```
+
 ### Contributing
 
 Bugs and feature request are tracked on [GitHub](https://github.com/alshf89/hunterdog/issues).

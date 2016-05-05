@@ -9,33 +9,29 @@ use alshf\build\InvalidValueException;
 try 
 {	
 	$feed = new HunterDog([
-		'url' 		=> 'https://www.theguardian.com/uk/technology/rss',
-		'channel' 	=> alshf\channels\feed\TheGuardian::class,
+		'url' 		=> 'http://www.businessinsider.com/politics/rss',
+		'channel' 	=> alshf\channels\feed\BusinessInsider::class,
 	]);
 
 	foreach ( $feed->get() as $item) 
 	{
 		try 
 		{
-			echo "<br>";
-			echo $item->title;
-			echo "<br>";
-			echo $item->description;
-			echo "<br>";
-			echo $item->link;
-			echo "<br>";
-			echo "<img src='".$item->image."'>";
-			echo "<br>";
-			echo $item->author;
-			echo "<br>";
-			echo $item->publishedAt;
-			echo "<br>";
-			echo $item->guid;
-			echo "<br>";
+			$feed = new stdClass;
+
+			$feed->title 	   	= $item->title;
+			$feed->description 	= $item->description;
+			$feed->link 	   	= $item->link;
+			$feed->image 	 	= "<img src='".$item->image."'>";
+			$feed->author   	= $item->author;
+			$feed->publishedAt  = $item->publishedAt;
+			$feed->guid 		= $item->guid;
+
+			dump($feed);
+
 		} 
 		catch (InvalidValueException $e) 
 		{
-			echo $e->getMessage();
 			continue;
 		}
 	}

@@ -2,7 +2,6 @@
 namespace alshf\resolver;
 
 use alshf\build\ClosureProvider;
-use alshf\resolver\SanitizerFacade;
 use alshf\build\InvalidValueException;
 use alshf\build\HunterDogException;
 
@@ -90,6 +89,7 @@ class Sanitizer
 		}
 
 		return $this->fixSpaces()
+					->fixNewLinesAndTabs()
 					->decode()
 					->removeTags()
 					->clearInvalidChars()
@@ -101,6 +101,13 @@ class Sanitizer
 	private function fixSpaces()
 	{
 		$this->string = str_ireplace('&nbsp;', ' ', $this->string);
+
+		return $this;
+	}
+
+	private function fixNewLinesAndTabs()
+	{
+		$this->string = preg_replace('/[\n\t\r]/', ' ', $this->string);
 
 		return $this;
 	}
@@ -164,10 +171,47 @@ class Sanitizer
 		return $this->string;
 	}
 
-	public function has( $needles , $haystack = null )
+	public function checkLength( $min, $max )
 	{
-		$haystack = !empty($haystack) ? $haystack : $this->string;
+		if( mb_strlen($this->string) <= $min && mb_strlen($this->string) >= $max )
+		{
+			throw new InvalidValueException(
+				'Invalid value length [ '.$length.' ] to sanitize [ '.$this->string.' ] in '.__METHOD__
+			);
+		}
 
+		return $this;
+	}
+
+	public function shrink( $length = 255 )
+	{
+		preg_match_all('/(?<![A-Z0-9]{1})\.{1,}/', $this->string , $matches , PREG_SET_ORDER | PREG_OFFSET_CAPTURE );
+
+		while ( count($matches) > 0 )
+		{
+			foreach (array_pop($matches) as $match) 
+			{
+				if( array_shift($match) == '.' )
+				{
+					$position = array_shift($match);
+
+					if( $position < $length )
+					{
+						$this->string = substr($this->string , 0 , $position + 1 );
+
+						return $this;
+					}
+				}
+			}
+		}
+
+		throw new InvalidValueException(
+			'Value has invalid endpoint to sanitize [ '.$this->string.' ] in '.__METHOD__
+		);
+	}
+
+	public function has( $needles , $haystack )
+	{
 	    if( is_array($needles) ) 
 	    {
 	        foreach ( $needles as $needle ) 
@@ -192,35 +236,11 @@ class Sanitizer
 	    }
 	}
 
-	public function hasSpecialchars()
-	{
-		if( preg_match('/(\-{2,}|[\/\\\*\(\)\@\_\+\<\>\|\[\]\{\}\=\;\#]+|\.\s?\.\s?\.)/', $this->string) ) 
-		{
-			throw new InvalidValueException(
-				'Value contains illegal characters to sanitize [ '.$this->string.' ] in '.__METHOD__
-			);
-		}
-
-		return $this;
-	}
-
-	public function checkLength( $length = 15 )
-	{
-		if( mb_strlen($this->string) <= $length )
-		{
-			throw new InvalidValueException(
-				'Invalid value length [ '.$length.' ] to sanitize [ '.$this->string.' ] in '.__METHOD__
-			);
-		}
-
-		return $this;
-	}
-
 	public function hasKeywords( array $keywords = null )
 	{
 		$keywords = is_array($keywords) ? array_merge($this->keywords,$keywords) : $this->keywords;
 
-		if( $this->has($keywords) )
+		if( $this->has($keywords , $this->string) )
 		{
 			throw new InvalidValueException(
 				'Value contains keywords [ '.implode('|', $keywords).' ] to sanitize [ '.$this->string.' ] in '.__METHOD__
@@ -228,5 +248,10 @@ class Sanitizer
 		}
 
 		return $this;
+	}
+
+	public function hasSymbols( $haystack )
+	{
+		return preg_match('/[^A-Z0-9a-z\s\.\,\"\'\!\?]/', $haystack) ? true : false;
 	}
 }

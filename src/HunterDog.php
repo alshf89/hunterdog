@@ -5,7 +5,6 @@ use SimpleXMLElement;
 use Exception;
 use alshf\build\HunterDogException;
 use alshf\build\ErrorBag;
-use alshf\SadDogFacade;
 use alshf\resolver\Sanitizer;
 
 class HunterDog
@@ -59,16 +58,16 @@ class HunterDog
 
 	private function loadXML()
 	{
-		// if( $this->checkURL() )
-		// {
+		if( $this->checkURL() )
+		{
 			$this->xml = new SimpleXMLElement(
 				$this->url , $this->options , $this->isDataUrl , $this->namespace , $this->hasPrefix
 			);
-		// }
-		// else
-		// {
-			// throw new HunterDogException('Please use valid XML link.');
-		// }
+		}
+		else
+		{
+			throw new HunterDogException('Please use valid XML link.');
+		}
 	}
 
 	private function checkURL()

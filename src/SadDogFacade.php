@@ -1,13 +1,11 @@
 <?php
 namespace alshf;
 
+use alshf\build\Facade;
 use alshf\build\HunterDogException;
-use alshf\build\FacadeInterface;
 
-abstract class SadDogFacade implements FacadeInterface
+class SadDogFacade extends Facade
 {
-	protected static $instance;
-
 	public static function __callStatic( $method , $args ) 
 	{
 
@@ -22,15 +20,5 @@ abstract class SadDogFacade implements FacadeInterface
 		}
 
 		throw new HunterDogException('SadDog can\'t call [ '.$method.' ] method statically!');
-	}
-
-	public static function setInstance($instance)
-	{
-		static::$instance  = $instance;
-	}
-
-	public static function getInstance()
-	{
-		return static::$instance;
 	}
 }

@@ -7,37 +7,6 @@ use Sanitizer;
 
 class CNN extends Feed
 {	
-	public function title()
-	{	
-		return Sanitizer::bleach( $this->item->title , [ 'format' => 'utf-8' ], 
-			function( $sponge )
-			{
-				$sponge->string = preg_replace(
-					'/(^live\s*[\:\-\;]|\s*[\:\-\;]\s*live$)/i', '', $sponge->string
-				);
-
-				return $sponge->checkLength()
-					   		  ->hasKeywords(['ET/PT'])
-					   		  ->hasSpecialchars();
-			}
-		);
-	}
-
-	public function description()
-	{
-		return Sanitizer::bleach( $this->item->description , [ 'format' => 'utf-8' ],
-			function( $sponge )
-			{
-				$sponge->string = preg_replace(
-					'/(spoiler\s{1}alert\s*\:*|continue\s{1}reading\.*)/i', '', $sponge->string
-				);
-
-				return $sponge->hasKeywords(['ET/PT'])
-							  ->checkLength(50);
-			}
-		);
-	}
-
 	public function image()
 	{
 		if( isset($this->item->children($this->namespaces->media)->thumbnail) )

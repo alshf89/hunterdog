@@ -3,7 +3,6 @@ namespace alshf\channels\feed;
 
 use alshf\channels\FeedProvider as Feed;
 use alshf\build\InvalidValueException;
-use Sanitizer;
 
 class Skynews extends Feed
 {	
@@ -16,6 +15,7 @@ class Skynews extends Feed
 						  ->thumbnail
 						  ->attributes()['url'];
 
+			// Images Width & Heigth Sample :
 			// http://media.skynews.com/media/images/generated/2016/4/13/458725/default/v3/11696207-1-1-70x50.jpg
 			return str_ireplace("70x50", "536x302", $image);
 		}

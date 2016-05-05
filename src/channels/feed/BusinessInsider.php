@@ -3,7 +3,6 @@ namespace alshf\channels\feed;
 
 use alshf\channels\FeedProvider as Feed;
 use alshf\build\InvalidValueException;
-use Sanitizer;
 
 class BusinessInsider extends Feed
 {	

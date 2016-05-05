@@ -3,7 +3,6 @@ namespace alshf\channels\feed;
 
 use alshf\channels\FeedProvider as Feed;
 use alshf\build\InvalidValueException;
-use Sanitizer;
 
 class TheGuardian extends Feed
 {	
@@ -23,14 +22,12 @@ class TheGuardian extends Feed
 	{
 		if( isset($this->item->children($this->namespaces->media)->content) )
 		{
-			$image = $this->item
-						  ->children($this->namespaces->media)
-						  ->thumbnail
-						  ->attributes();
-
-			if( $image['width'] > 400 )
+			foreach ($this->item->xpath('media:content') as $image) 
 			{
-				return $image['url'];
+				if( $image['width'] > 400 )
+				{
+					return $image['url'];
+				}
 			}
 		}
 		

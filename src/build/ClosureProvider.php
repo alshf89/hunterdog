@@ -2,7 +2,6 @@
 namespace alshf\build;
 
 use Closure;
-use alshf\build\HunterDogException;
 
 trait ClosureProvider
 {

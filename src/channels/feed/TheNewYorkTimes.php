@@ -7,26 +7,6 @@ use Sanitizer;
 
 class TheNewYorkTimes extends Feed
 {	
-	public function title()
-	{
-		return Sanitizer::bleach( $this->item->title, ['format' => 'utf-8'],
-			function( $sponge )
-			{
-				$sponge->string = preg_replace(
-					'/(^live\s*[\:\-\;]|\s*[\:\-\;]\s*live$)/i', '', $sponge->string
-				);
-
-				$sponge->string = preg_replace(
-					'/(^.{0,50}\s*(\:|\-)|(\-|\:)\s*.{0,50}$)/', '', $sponge->string
-				);
-
-				return $sponge->checkLength()
-					   		  ->hasKeywords()
-					   		  ->hasSpecialchars();
-			}
-		);
-	}
-
 	public function author()
 	{
 		if( !empty($this->item->children($this->namespaces->dc)->creator) )

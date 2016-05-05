@@ -1,8 +1,6 @@
 <?php
 namespace alshf\channels;
 
-use alshf\channels\FeedInterface;
-use alshf\channels\FeedNamespaces as FeedNS;
 use alshf\build\HunterDogException;
 use alshf\build\InvalidValueException;
 use Sanitizer;
@@ -17,7 +15,7 @@ abstract class FeedProvider implements FeedInterface
 	{
 		$this->item = $item;
 
-		$this->namespaces = new FeedNS( $namespaces );
+		$this->namespaces = new FeedNamespaces( $namespaces );
 	}
 
 	public function __get( $key )
@@ -33,31 +31,23 @@ abstract class FeedProvider implements FeedInterface
 	}
 
 	public function title()
-	{	
-		return Sanitizer::bleach( $this->item->title , [ 'format' => 'utf-8' ], 
-			function( $sponge )
+	{
+		return Sanitizer::bleach( 
+			$this->item->title , [ 'format' => 'utf-8' ], function( $sponge )
 			{
-				$sponge->string = preg_replace(
-					'/(^live\s*[\:\-\;]|\s*[\:\-\;]\s*live$)/i', '', $sponge->string
-				);
-
-				return $sponge->checkLength(15)
-					   		  ->hasKeywords()
-					   		  ->hasSpecialchars();
+				return $sponge->checkLength(15 , 255)
+					   		  ->hasKeywords();
 			}
 		);
 	}
 
 	public function description()
 	{
-		return Sanitizer::bleach( $this->item->description , [ 'format' => 'utf-8' ],
-			function( $sponge )
+		return Sanitizer::bleach( 
+			$this->item->description , [ 'format' => 'utf-8' ], function( $sponge )
 			{
-				$sponge->string = preg_replace(
-					'/(spoiler\s{1}alert\s*\:*|continue\s{1}reading\.*)/i', '', $sponge->string
-				);
-
-				return $sponge->checkLength(50);
+				return $sponge->shrink()
+							  ->checkLength(50 , 255);
 			}
 		);
 	}
