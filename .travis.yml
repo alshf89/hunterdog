@@ -4,5 +4,5 @@ php:
 env:
   - carbonVersion="^1.21"
 install: 
-  - php vendor/autoload.php
+  - php ../vendor/autoload.php
   - composer require nesbot/carbon:${carbonVersion}
