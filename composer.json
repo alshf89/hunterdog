@@ -1,7 +1,8 @@
 {
     "name": "alshf/hunter-dog",
-    "description": "RSS Reader Engine for theMondayNews",
+    "description": "A lightweight, expressive and fast Feed RSS Reader. HunterDog takes care of value sanitization.",
     "keywords" : ["RSS","theMondayNews","HunterDog"],
+    "homepage": "https://github.com/alshf89/hunterdog",
     "require-dev": {
         "symfony/var-dumper": "^3.0"
     },
@@ -10,7 +11,8 @@
     "authors": [
         {
             "name": "Ali Shafiee",
-            "email": "ali@themondaynews.com"
+            "email": "ali@themondaynews.com",
+            "role": "Developer"
         }
     ],
     "autoload": {
