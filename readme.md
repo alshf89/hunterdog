@@ -19,7 +19,7 @@ HunterDog uses [Composer](http://getcomposer.org/doc/00-intro.md#installation-ni
 
 Learn to use composer and run this Command Line:
 
-    composer require alshf/hunterdog
+    composer require alshf/hunter-dog
 
 And run:
 
