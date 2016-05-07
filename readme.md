@@ -21,10 +21,6 @@ Learn to use composer and run this Command Line:
 
     composer require alshf/hunter-dog
 
-And run:
-
-    composer update
-
 ### Channels
 
 **HunterDog** provides feed channels and you should use these channels for each feed URLs
