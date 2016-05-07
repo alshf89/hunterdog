@@ -17,17 +17,9 @@ A lightweight, expressive and fast Feed Reader. HunterDog takes care of value sa
 
 HunterDog uses [Composer](http://getcomposer.org/doc/00-intro.md#installation-nix) to make things easy.
 
-Learn to use composer and add this to require section (in your composer.json):
+Learn to use composer and run this Command Line:
 
-    "alshf/hunterdog": "1.*"
-
-Or you can use command line:
-	
-	composer require alshf/hunterdog
-
-And run:
-
-    composer update
+    composer require alshf/hunter-dog
 
 ### Channels
 
