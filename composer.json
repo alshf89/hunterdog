@@ -4,7 +4,8 @@
     "keywords" : ["RSS","theMondayNews","HunterDog"],
     "homepage": "https://github.com/alshf89/hunterdog",
     "require-dev": {
-        "symfony/var-dumper": "^3.0"
+        "symfony/var-dumper": "^3.0",
+        "phpunit/phpunit": "^5.3"
     },
     "license": "MIT",
     "minimum-stability": "dev",
