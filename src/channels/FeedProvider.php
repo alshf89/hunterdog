@@ -22,7 +22,7 @@ abstract class FeedProvider implements FeedInterface
 	{	
 		$value = $this->$key();
 
-		return !empty($value) ? (string) trim($value) : null;
+		return !empty($value) ? trim($value) : null;
 	}
 
 	public function __call( $method, $args )
