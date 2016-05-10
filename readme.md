@@ -1,3 +1,5 @@
+[![Build Status](https://api.travis-ci.org/alshf89/hunterdog.svg?branch=master)](https://travis-ci.org/alshf/hunterdog)
+
 # HunterDog Feed Reader
 
 A lightweight, expressive and fast Feed Reader. HunterDog takes care of value sanitization. At least PHP 5.4 is required.
