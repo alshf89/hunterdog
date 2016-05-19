@@ -1,9 +1,10 @@
 <?php
-namespace alshf\resolver;
+namespace alshf\Build\Resolver;
 
-use alshf\build\ClosureProvider;
-use alshf\build\InvalidValueException;
-use alshf\build\HunterDogException;
+use alshf\Traits\ClosureProvider;
+use alshf\Exceptions\InvalidValueException;
+use alshf\Exceptions\HunterDogException;
+use alshf\Build\Facade\SanitizerFacade;
 
 class Sanitizer
 {	
@@ -185,7 +186,7 @@ class Sanitizer
 
 	public function shrink( $length = 255 )
 	{
-		preg_match_all('/(?<![A-Z0-9]{1})\.{1,}/', $this->string , $matches , PREG_SET_ORDER | PREG_OFFSET_CAPTURE );
+		preg_match_all('/(?<![A-Z0-9]{1})(?<!(\s|\.).{1})\.{1,}/', $this->string , $matches , PREG_SET_ORDER | PREG_OFFSET_CAPTURE );
 
 		while ( count($matches) > 0 )
 		{

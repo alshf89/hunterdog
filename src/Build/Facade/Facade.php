@@ -1,7 +1,9 @@
 <?php
-namespace alshf\build;
+namespace alshf\Build\Facade;
 
-abstract class Facade implements FacadeInterface
+use alshf\Exceptions\HunterDogException;
+
+class Facade
 {
 	protected static $instance;
 

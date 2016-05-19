@@ -1,5 +1,5 @@
 <?php
-namespace alshf\build;
+namespace alshf\Exceptions;
 
 use Exception;
 

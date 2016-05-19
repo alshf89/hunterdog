@@ -1,7 +1,7 @@
 <?php
-namespace alshf\build;
+namespace alshf\Contracts;
 
-interface FacadeInterface
+interface FacadeContract
 {
 	public static function setInstance($instance);
 

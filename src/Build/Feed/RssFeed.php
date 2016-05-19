@@ -1,36 +1,13 @@
 <?php
-namespace alshf\channels;
+namespace alshf\Build\Feed;
 
-use alshf\build\HunterDogException;
-use alshf\build\InvalidValueException;
-use Sanitizer;
 use Carbon\Carbon;
+use Sanitizer;
+use alshf\Exceptions\InvalidValueException;
 
-abstract class FeedProvider implements FeedInterface
+class RssFeed extends FeedProvider
 {
-	protected $item;
-	protected $namespaces;
-
-	public function __construct( $item, $namespaces )
-	{
-		$this->item = $item;
-
-		$this->namespaces = new FeedNamespaces( $namespaces );
-	}
-
-	public function __get( $key )
-	{	
-		$value = $this->$key();
-
-		return !empty($value) ? trim($value) : null;
-	}
-
-	public function __call( $method, $args )
-	{
-		throw new HunterDogException('Bad method call : [ '.$method.' ] not exist in '.__CLASS__);
-	}
-
-	public function title()
+	protected function title()
 	{
 		return Sanitizer::bleach( 
 			$this->item->title , [ 'format' => 'utf-8' ], function( $sponge )
@@ -41,7 +18,7 @@ abstract class FeedProvider implements FeedInterface
 		);
 	}
 
-	public function description()
+	protected function description()
 	{
 		return Sanitizer::bleach( 
 			$this->item->description , [ 'format' => 'utf-8' ], function( $sponge )
@@ -52,7 +29,7 @@ abstract class FeedProvider implements FeedInterface
 		);
 	}
 
-	public function link()
+	protected function link()
 	{
 		if( !empty($this->item->link) )
 		{
@@ -62,12 +39,12 @@ abstract class FeedProvider implements FeedInterface
 		throw new InvalidValueException('Invalid link value in '.__METHOD__);
 	}
 
-	public function publishedAt()
+	protected function publishedAt()
 	{
 		return Carbon::parse( $this->item->pubDate )->format('Y-m-d H:i:s');
 	}
 
-	public function author()
+	protected function author()
 	{
 		if( !empty($this->item->author) )
 		{
@@ -77,7 +54,7 @@ abstract class FeedProvider implements FeedInterface
 		return null;
 	}
 
-	public function guid()
+	protected function guid()
 	{	
 		if( !empty($this->item->guid) )
 		{
@@ -91,5 +68,16 @@ abstract class FeedProvider implements FeedInterface
 		throw new InvalidValueException('Invalid guid value in '.__METHOD__);
 	}
 
-	abstract public function image();
+	protected function image()
+	{
+		if( isset($this->item->children($this->namespaces->media)->thumbnail) )
+		{
+			return $this->item
+							->children($this->namespaces->media)
+							->thumbnail
+							->attributes()['url'];
+		}
+		
+		throw new InvalidValueException('Invalid image value in '.__METHOD__);
+	}
 }

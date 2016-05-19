@@ -1,13 +1,13 @@
 <?php
-namespace alshf\channels\feed;
+namespace alshf\Channels;
 
-use alshf\channels\FeedProvider as Feed;
-use alshf\build\InvalidValueException;
+use alshf\Build\Feed\RssFeed as Feed;
+use alshf\Exceptions\InvalidValueException;
 use Sanitizer;
 
 class TheNewYorkTimes extends Feed
 {	
-	public function author()
+	protected function author()
 	{
 		if( !empty($this->item->children($this->namespaces->dc)->creator) )
 		{
@@ -21,7 +21,7 @@ class TheNewYorkTimes extends Feed
 		return null;
 	}
 
-	public function image()
+	protected function image()
 	{
 		if( isset($this->item->children($this->namespaces->media)->content) )
 		{

@@ -1,13 +1,12 @@
 <?php
-namespace alshf\channels\feed;
+namespace alshf\Channels;
 
-use alshf\channels\FeedProvider as Feed;
-use alshf\build\InvalidValueException;
-use Sanitizer;
+use alshf\Build\Feed\RssFeed as Feed;
+use alshf\Exceptions\InvalidValueException;
 
-class Cnet extends Feed
+class BusinessInsider extends Feed
 {	
-	public function author()
+	protected function author()
 	{
 		if( !empty($this->item->children($this->namespaces->dc)->creator) )
 		{
@@ -19,7 +18,7 @@ class Cnet extends Feed
 		return null;
 	}
 
-	public function image()
+	protected function image()
 	{
 		if( isset($this->item->children($this->namespaces->media)->thumbnail) )
 		{
@@ -28,10 +27,10 @@ class Cnet extends Feed
 						  ->thumbnail
 						  ->attributes()['url'];
 
-			if( !Sanitizer::has('default.jpg', $image) )
-			{
-				return $image;
-			}
+    		// Images Width & Heigth Sample :
+    		// http://static2.businessinsider.com/image/563989ac9dd7cc70408bbec8/ex.jpg
+			// http://static2.businessinsider.com/image/563989ac9dd7cc70408bbec8-800/ex.jpg
+			return substr_replace($image, '-800', strrpos($image, '/'), 0);
 		}
 		
 		throw new InvalidValueException('Invalid image value in '.__METHOD__);

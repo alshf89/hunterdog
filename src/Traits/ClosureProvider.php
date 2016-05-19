@@ -1,7 +1,8 @@
 <?php
-namespace alshf\build;
+namespace alshf\Traits;
 
 use Closure;
+use alshf\Exceptions\HunterDogException;
 
 trait ClosureProvider
 {

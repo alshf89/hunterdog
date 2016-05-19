@@ -3,9 +3,10 @@ namespace alshf;
 
 use SimpleXMLElement;
 use Exception;
-use alshf\build\HunterDogException;
-use alshf\build\ErrorBag;
-use alshf\resolver\Sanitizer;
+use alshf\Exceptions\HunterDogException;
+use alshf\Traits\ErrorBag;
+use alshf\Build\Resolver\Sanitizer;
+use alshf\Build\Facade\SadDogFacade;
 
 class HunterDog
 {

@@ -2,9 +2,9 @@
 namespace tests;
 
 use alshf\HunterDog;
-use alshf\build\HunterDogException;
-use alshf\build\InvalidValueException;
-use alshf\channels\feed\BusinessInsider;
+use alshf\Exceptions\HunterDogException;
+use alshf\Exceptions\InvalidValueException;
+use alshf\Channels\BusinessInsider;
 use PHPUnit_Framework_TestCase;
 
 class HunterDogTest extends PHPUnit_Framework_TestCase

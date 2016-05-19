@@ -1,14 +1,13 @@
 <?php
-namespace alshf;
+namespace alshf\Build\Facade;
 
-use alshf\build\Facade;
-use alshf\build\HunterDogException;
+use alshf\Contracts\FacadeContract;
+use alshf\Exceptions\HunterDogException;
 
-class SadDogFacade extends Facade
+class SadDogFacade extends Facade implements FacadeContract
 {
 	public static function __callStatic( $method , $args ) 
 	{
-
 		if ( !static::$instance )
 		{
 			throw new HunterDogException('Bad static method call : [ '.$method.' ] not exist!');

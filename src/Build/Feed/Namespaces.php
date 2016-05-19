@@ -1,9 +1,9 @@
 <?php
-namespace alshf\channels;
+namespace alshf\Build\Feed;
 
-class FeedNamespaces
+class Namespaces
 {
-	public function __construct( $namespaces )
+	public function __construct( array $namespaces )
 	{
 		if( is_array($namespaces) )
 		{
