@@ -1,4 +1,8 @@
 [![Build Status](https://api.travis-ci.org/alshf89/hunterdog.svg?branch=master)](https://travis-ci.org/alshf/hunterdog)
+[![License](https://poser.pugx.org/alshf/hunter-dog/license)](https://packagist.org/packages/alshf/hunter-dog)
+[![Total Downloads](https://poser.pugx.org/alshf/hunter-dog/downloads)](https://packagist.org/packages/alshf/hunter-dog)
+[![Latest Stable Version](https://poser.pugx.org/alshf/hunter-dog/version)](https://packagist.org/packages/alshf/hunter-dog)
+[![Latest Unstable Version](https://poser.pugx.org/alshf/hunter-dog/v/unstable)](//packagist.org/packages/alshf/hunter-dog)
 
 # HunterDog Feed Reader
 
