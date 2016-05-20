@@ -2,7 +2,7 @@
 [![License](https://poser.pugx.org/alshf/hunter-dog/license)](https://packagist.org/packages/alshf/hunter-dog)
 [![Total Downloads](https://poser.pugx.org/alshf/hunter-dog/downloads)](https://packagist.org/packages/alshf/hunter-dog)
 [![Latest Stable Version](https://poser.pugx.org/alshf/hunter-dog/version)](https://packagist.org/packages/alshf/hunter-dog)
-[![Latest Unstable Version](https://poser.pugx.org/alshf/hunter-dog/v/unstable)](//packagist.org/packages/alshf/hunter-dog)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e05efa1256484c95ad852b28c34afc6f)](https://www.codacy.com/app/alshf89/hunterdog?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alshf89/hunterdog&amp;utm_campaign=Badge_Grade)
 
 # HunterDog Feed Reader
 
@@ -35,18 +35,18 @@ Learn to use composer and run this Command Line:
 
 ```PHP
 	// Channels
-	alshf\channels\feed\CNN::class
-	alshf\channels\feed\Cnet::class
-	alshf\channels\feed\Goal::class
-	alshf\channels\feed\Quartz::class
-	alshf\channels\feed\Forbes::class
-	alshf\channels\feed\Skynews::class
-	alshf\channels\feed\Telegraph::class
-	alshf\channels\feed\TheGuardian::class
-	alshf\channels\feed\TheIndependent::class
-	alshf\channels\feed\BusinessInsider::class
-	alshf\channels\feed\EveningStandard::class
-	alshf\channels\feed\TheNewYorkTimes::class
+	alshf\Channels\CNN::class
+	alshf\Channels\Cnet::class
+	alshf\Channels\Goal::class
+	alshf\Channels\Quartz::class
+	alshf\Channels\Forbes::class
+	alshf\Channels\Skynews::class
+	alshf\Channels\Telegraph::class
+	alshf\Channels\TheGuardian::class
+	alshf\Channels\TheIndependent::class
+	alshf\Channels\BusinessInsider::class
+	alshf\Channels\EveningStandard::class
+	alshf\Channels\TheNewYorkTimes::class
 ```
 
 ### How to use
@@ -64,14 +64,14 @@ require 'vendor/autoload.php';
 ```PHP
 // use HunterDog & Exception
 use alshf\HunterDog;
-use alshf\build\HunterDogException;
+use alshf\Exceptions\HunterDogException;
 
 try
 {	
 	// Create new instance from HunterDog class and pass URL and channel class as an array parameter
 	$feed = new HunterDog([
 		'url' 		=> 'http://cnet.com/rss/news/',
-		'channel' 	=> alshf\channels\feed\Cnet::class,
+		'channel' 	=> alshf\Channels\Cnet::class,
 	]);
 
 	// Get feed
@@ -89,14 +89,14 @@ catch( HunterDogException $e )
 Now you can get title or description or etc from each feed items
 
 ```PHP
-use alshf\build\InvalidValueException;
+use alshf\Exceptions\InvalidValueException;
 ```
 
 **Note:** HunterDog will Sanitize it for you so you need to use Sanitizer exception
 
 ```PHP
 // use Sanitizer exception
-use alshf\build\InvalidValueException;
+use alshf\Exceptions\InvalidValueException;
 
 // Loop throught each feed items
 foreach ( $feed->get() as $item ) 
@@ -146,7 +146,7 @@ SadDog::lastError();
 ```PHP
 // use HunterDog & Exception
 use alshf\HunterDog;
-use alshf\build\HunterDogException;
+use alshf\Exceptions\HunterDogException;
 use SadDog;
 
 try
@@ -154,7 +154,7 @@ try
 	// Create new instance from HunterDog class and pass URL and channel class as an array parameter
 	$feed = new HunterDog([
 		'url' 		=> 'http://cnet.com/rss/news/',
-		'channel' 	=> alshf\channels\feed\Cnet::class,
+		'channel' 	=> alshf\Channels\Cnet::class,
 	]);
 }
 catch( HunterDogException $e )
